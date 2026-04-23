@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Zone;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('landing.pages.index');
+    $zones = Zone::all();
+    return view('landing.pages.index', compact('zones'));
 });
 
 Route::get('/detail', function () {
@@ -17,6 +19,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     })->name('index');
 
 Route::resource('zones', \App\Http\Controllers\ZoneController::class);
+Route::resource('attractions', \App\Http\Controllers\AttractionController::class);
+Route::get('/reviews', [\App\Http\Controllers\ReviewController::class, 'index'])->name('reviews.index');
 });
 
 Route::get('/dashboard', function () {

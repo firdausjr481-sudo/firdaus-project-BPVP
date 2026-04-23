@@ -141,7 +141,7 @@
 				@forelse($zones as $zone)
 					<div class="col-lg-4 col-sm-12 col-xs-12">
 					<div class="single_property">
-						<img src="{{ storage::url($zone->image) }}" class="img-fluid" alt="" />
+						<img src="{{ asset('/storage/images/' . $zone->image) }}" class="img-fluid" alt="" />
 						<div class="single_property_description text-center">
 							<span><i class="fa fa-object-group"></i> Attraction:</span>
 						

@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\zone;
+use App\Models\Zone;
+use App\Models\Attraction;
 use Illuminate\Http\Request;
 
-class ZoneController extends Controller
+class AttractionController extends Controller
 {
-   
     public function index()
     {
-        $zones = zone::all();
-        return view('admin.pages.zones.index', compact('zones'));
+        $attractions = attraction::all();
+        return view('admin.pages.attractions.index', compact('attractions'));
     }
 
-    
     public function create()
     {
-        return view('admin.pages.zones.create');
+        $zones = Zone::all();
+        return view('admin.pages.attractions.create', compact('zones'));
     }
 
-  
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -34,29 +33,26 @@ class ZoneController extends Controller
                 $imagePath = $request->file('image')->store('images','public');
                 $validated['image'] = basename($imagePath);
             }
-            Zone::create($validated);
+            Attraction::create($validated);
 
-            return redirect('/admin/zones')->with('success','Zone created successfully.');
+            return redirect('/admin/attractions')->with('success','Attraction created successfully.');
     }
 
-   
     public function show(string $id)
     {
-        $zone = zone::findOrFail($id);
-        return view('admin.pages.zones.show', compact('zone'));
+        $attraction = attraction::findOrFail($id);
+        return view('admin.pages.attractions.show', compact('attraction'));
     }
 
-    
     public function edit(string $id)
     {
-        $zone = zone::findOrFail($id);
-        return view('admin.pages.zones.edit', compact('zone'));
+        $attraction = attraction::findOrFail($id);
+        return view('admin.pages.attractions.edit', compact('attraction'));
     }
 
-  
     public function update(Request $request, string $id)
     {
-        $zone = zone::findOrFail($id);
+        $attraction = attraction::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required',
@@ -69,17 +65,20 @@ class ZoneController extends Controller
                 $imagePath = $request->file('image')->store('images','public');
                 $validated['image'] = basename($imagePath);
             }
-            $zone->update($validated);
+            $attraction->update($validated);
 
-            return redirect('/admin/zones')->with('success','Zone updated successfully.');
+            return redirect('/admin/attractions')->with('success','Attraction updated successfully.');
+    }
+
+    public function destroy(string $id)
+    {
+        $attraction = attraction::findOrFail($id);
+        $attraction->delete();
+
+        return redirect('/admin/attractions')->with('success','Attraction deleted successfully.');
     }
 
     
-    public function destroy(string $id)
-    {
-        $zone = zone::findOrFail($id);
-        $zone->delete();
 
-        return redirect('/admin/zones')->with('success','Zone deleted successfully.');
-    }
+
 }
