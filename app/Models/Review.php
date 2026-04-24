@@ -17,6 +17,6 @@ class Review extends Model
 
     public function reviewable()
     {
-        return $this->morphTo();
+        return $this->morphTo($this, 'reviewable_type', 'reviewable_id');
     }
 }

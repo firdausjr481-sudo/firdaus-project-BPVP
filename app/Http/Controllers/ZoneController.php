@@ -82,4 +82,11 @@ class ZoneController extends Controller
 
         return redirect('/admin/zones')->with('success','Zone deleted successfully.');
     }
+
+    public function showZone(string $id)
+    {
+        $zone = zone::findOrFail($id);
+        return view('landing.pages.detail-zone', compact('zone'));
+    }
+
 }
